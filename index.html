@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Flowmatic — Automate Your Business</title>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600;9..144,700&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & TOKENS ─────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+:root{
+  --ink:#0f1117;
+  --ink2:#3a3d47;
+  --ink3:#7a7e8a;
+  --rule:#e4e6ec;
+  --rule2:#f0f1f5;
+  --bg:#fafafa;
+  --white:#ffffff;
+  --accent:#1a56db;
+  --accent-lt:#eff4ff;
+  --accent-dk:#1241a8;
+  --green:#059669;
+  --green-lt:#ecfdf5;
+  --serif:'Fraunces',Georgia,serif;
+  --sans:'Instrument Sans',sans-serif;
+  --r:6px;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 4px 16px rgba(0,0,0,.06);
+  --shadow-lg:0 8px 40px rgba(0,0,0,.10);
+}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1rem;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+img{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+
+/* ─── SCROLL REVEAL ─────────────────────────────── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.in{opacity:1;transform:none}
+.reveal-delay-1{transition-delay:.1s}
+.reveal-delay-2{transition-delay:.2s}
+.reveal-delay-3{transition-delay:.3s}
+.reveal-delay-4{transition-delay:.4s}
+
+/* ─── NAV ───────────────────────────────────────── */
+#nav{
+  position:sticky;top:0;z-index:200;
+  background:rgba(250,250,250,.92);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s;
+}
+#nav.scrolled{border-bottom-color:var(--rule)}
+.nav-inner{
+  max-width:1120px;margin:0 auto;
+  display:flex;align-items:center;
+  padding:0 32px;height:64px;gap:40px;
+}
+.nav-logo{
+  font-family:var(--serif);font-size:1.35rem;font-weight:700;
+  color:var(--ink);letter-spacing:-.02em;flex-shrink:0;
+}
+.nav-logo span{color:var(--accent)}
+.nav-links{display:flex;gap:32px;flex:1}
+.nav-links a{
+  font-size:.875rem;font-weight:500;color:var(--ink2);
+  transition:color .2s;white-space:nowrap;
+}
+.nav-links a:hover{color:var(--accent)}
+.nav-cta{
+  display:flex;align-items:center;gap:10px;margin-left:auto;flex-shrink:0;
+}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-family:var(--sans);font-size:.875rem;font-weight:600;
+  border-radius:var(--r);cursor:pointer;border:none;
+  transition:all .18s;white-space:nowrap;
+}
+.btn-ghost{
+  background:transparent;color:var(--ink2);
+  padding:9px 18px;
+}
+.btn-ghost:hover{color:var(--accent)}
+.btn-primary{
+  background:var(--accent);color:#fff;
+  padding:10px 22px;
+  box-shadow:0 2px 8px rgba(26,86,219,.25);
+}
+.btn-primary:hover{background:var(--accent-dk);box-shadow:0 4px 14px rgba(26,86,219,.35);transform:translateY(-1px)}
+.btn-primary:active{transform:none}
+.btn-large{padding:14px 32px;font-size:1rem;border-radius:8px}
+.btn-outline{
+  background:transparent;color:var(--accent);
+  border:1.5px solid var(--accent);padding:10px 22px;
+}
+.btn-outline:hover{background:var(--accent-lt)}
+
+/* hamburger */
+.nav-ham{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.nav-ham span{display:block;width:22px;height:2px;background:var(--ink);border-radius:2px;transition:all .25s}
+.nav-mob{display:none;flex-direction:column;gap:0;background:var(--white);border-top:1px solid var(--rule)}
+.nav-mob a{display:block;padding:14px 32px;font-size:.9rem;font-weight:500;color:var(--ink2);border-bottom:1px solid var(--rule2)}
+.nav-mob .btn{margin:14px 32px 18px}
+
+/* ─── HERO ──────────────────────────────────────── */
+#hero{
+  padding:96px 32px 80px;
+  max-width:1120px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 480px;
+  gap:64px;align-items:center;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:8px;
+  background:var(--accent-lt);color:var(--accent);
+  font-size:.8rem;font-weight:600;letter-spacing:.04em;
+  text-transform:uppercase;border-radius:99px;
+  padding:5px 14px;margin-bottom:24px;
+}
+.hero-eyebrow span{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--accent);animation:pulse 1.8s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.hero-h1{
+  font-family:var(--serif);font-size:clamp(2.6rem,5vw,3.8rem);
+  font-weight:700;line-height:1.1;letter-spacing:-.03em;
+  color:var(--ink);margin-bottom:24px;
+}
+.hero-h1 em{font-style:italic;color:var(--accent)}
+.hero-sub{
+  font-size:1.1rem;color:var(--ink2);line-height:1.7;
+  max-width:520px;margin-bottom:36px;
+}
+.hero-actions{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.hero-trust{
+  display:flex;align-items:center;gap:10px;
+  margin-top:32px;color:var(--ink3);font-size:.8rem;
+}
+.hero-trust-avatars{display:flex}
+.hero-trust-avatars span{
+  width:28px;height:28px;border-radius:50%;border:2px solid var(--white);
+  background:var(--rule2);margin-left:-6px;first-child{margin-left:0}
+  display:grid;place-items:center;font-size:10px;font-weight:700;color:var(--ink2);
+  flex-shrink:0;
+}
+.hero-trust-avatars span:first-child{margin-left:0}
+/* Hero illustration */
+.hero-visual{
+  background:var(--white);
+  border:1px solid var(--rule);
+  border-radius:16px;
+  box-shadow:var(--shadow-lg);
+  overflow:hidden;
+  position:relative;
+}
+.hero-window-bar{
+  display:flex;align-items:center;gap:7px;
+  padding:12px 16px;border-bottom:1px solid var(--rule2);
+  background:var(--rule2);
+}
+.hw-dot{width:10px;height:10px;border-radius:50%}
+.hw-dot:nth-child(1){background:#ff6b6b}
+.hw-dot:nth-child(2){background:#ffd93d}
+.hw-dot:nth-child(3){background:#6bcb77}
+.hw-title{font-size:.75rem;color:var(--ink3);margin-left:8px;font-weight:500}
+.hero-dash{padding:20px}
+/* Mini dashboard inside hero */
+.hd-row{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:14px}
+.hd-card{
+  background:var(--rule2);border-radius:8px;padding:12px 14px;
+}
+.hd-card-label{font-size:.7rem;color:var(--ink3);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+.hd-card-val{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--ink)}
+.hd-card-chg{font-size:.7rem;margin-top:2px}
+.hd-card-chg.up{color:var(--green)}
+.hd-flow{background:var(--rule2);border-radius:8px;padding:14px}
+.hd-flow-title{font-size:.75rem;font-weight:600;color:var(--ink2);margin-bottom:12px}
+.hd-flow-nodes{display:flex;align-items:center;gap:0}
+.hd-node{
+  display:flex;align-items:center;gap:6px;
+  background:var(--white);border:1px solid var(--rule);
+  border-radius:6px;padding:7px 10px;font-size:.72rem;font-weight:600;
+  white-space:nowrap;flex-shrink:0;
+}
+.hd-node-icon{font-size:13px}
+.hd-arrow{flex:1;height:1px;background:var(--accent);opacity:.3;position:relative;min-width:12px}
+.hd-arrow::after{
+  content:'';position:absolute;right:-1px;top:-3px;
+  border:4px solid transparent;border-left-color:var(--accent);opacity:.6;
+}
+.hd-status{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:12px;
+}
+.hd-status-item{display:flex;align-items:center;gap:6px;font-size:.7rem;color:var(--ink3)}
+.hd-dot{width:6px;height:6px;border-radius:50%}
+
+/* animated ticker */
+.hd-ticker{
+  margin-top:12px;background:var(--accent-lt);
+  border-radius:6px;padding:8px 12px;
+  display:flex;align-items:center;gap:8px;
+  font-size:.72rem;color:var(--accent);font-weight:500;
+  overflow:hidden;
+}
+.hd-ticker-items{display:flex;gap:0;animation:ticker 8s linear infinite}
+.hd-ticker-item{white-space:nowrap;padding-right:48px}
+
+@keyframes ticker{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+
+/* ─── SOCIAL PROOF ──────────────────────────────── */
+#social{
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  padding:28px 32px;background:var(--white);
+}
+.social-inner{
+  max-width:1120px;margin:0 auto;
+  display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center;
+}
+.social-label{font-size:.8rem;color:var(--ink3);font-weight:500;white-space:nowrap}
+.social-logos{display:flex;align-items:center;gap:36px;flex-wrap:wrap;justify-content:center}
+.social-logo{
+  font-family:var(--serif);font-size:1rem;font-weight:700;
+  color:var(--rule);letter-spacing:-.01em;transition:color .2s;
+  filter:grayscale(1);opacity:.45;
+}
+
+/* ─── SECTION SHARED ────────────────────────────── */
+.section{padding:96px 32px}
+.section-inner{max-width:1120px;margin:0 auto}
+.section-tag{
+  font-size:.78rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:12px;
+}
+.section-h2{
+  font-family:var(--serif);font-size:clamp(2rem,4vw,2.9rem);
+  font-weight:700;line-height:1.15;letter-spacing:-.025em;
+  color:var(--ink);margin-bottom:16px;
+}
+.section-sub{font-size:1.05rem;color:var(--ink2);line-height:1.7;max-width:580px}
+.section-header{margin-bottom:64px}
+.section-header.center{text-align:center}
+.section-header.center .section-sub{margin:0 auto}
+
+/* ─── FEATURES ──────────────────────────────────── */
+#features{background:var(--white)}
+.feat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+.feat-item{
+  padding:40px 44px;border-bottom:1px solid var(--rule);
+  border-right:1px solid var(--rule);
+  transition:background .2s;
+}
+.feat-item:nth-child(even){border-right:none}
+.feat-item:nth-last-child(-n+2){border-bottom:none}
+.feat-item:hover{background:var(--rule2)}
+.feat-icon{
+  width:44px;height:44px;border-radius:10px;
+  background:var(--accent-lt);
+  display:grid;place-items:center;font-size:20px;
+  margin-bottom:20px;
+  transition:background .2s,transform .2s;
+}
+.feat-item:hover .feat-icon{background:var(--accent);transform:scale(1.08)}
+.feat-h3{
+  font-family:var(--serif);font-size:1.15rem;font-weight:600;
+  margin-bottom:10px;color:var(--ink);
+}
+.feat-p{font-size:.9rem;color:var(--ink2);line-height:1.65}
+
+/* ─── HOW IT WORKS ──────────────────────────────── */
+#how{background:var(--bg)}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:0;position:relative}
+.steps::before{
+  content:'';position:absolute;top:28px;left:calc(12.5% + 20px);
+  right:calc(12.5% + 20px);height:1px;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--rule) 100%);
+  z-index:0;
+}
+.step{padding:0 24px;text-align:center;position:relative;z-index:1}
+.step-num{
+  width:56px;height:56px;border-radius:50%;
+  border:1.5px solid var(--rule);
+  background:var(--white);
+  display:grid;place-items:center;margin:0 auto 20px;
+  font-family:var(--serif);font-size:1.1rem;font-weight:700;color:var(--accent);
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  transition:background .2s,color .2s;
+}
+.step:hover .step-num{background:var(--accent);color:var(--white)}
+.step-h{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:8px}
+.step-p{font-size:.85rem;color:var(--ink2);line-height:1.6}
+
+/* ─── METRICS STRIP ─────────────────────────────── */
+#metrics{
+  background:var(--ink);
+  padding:64px 32px;
+}
+.metrics-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.metric-item{text-align:center}
+.metric-val{
+  font-family:var(--serif);font-size:clamp(2.2rem,4vw,3rem);
+  font-weight:700;color:var(--white);letter-spacing:-.02em;
+  margin-bottom:6px;
+}
+.metric-val span{color:var(--accent);font-size:.7em}
+.metric-label{font-size:.85rem;color:rgba(255,255,255,.5);font-weight:500}
+
+/* ─── TESTIMONIALS ──────────────────────────────── */
+#testimonials{background:var(--white)}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.testi-card{
+  background:var(--bg);border:1px solid var(--rule);
+  border-radius:12px;padding:28px;
+  transition:box-shadow .2s,transform .2s;
+}
+.testi-card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.testi-stars{display:flex;gap:3px;margin-bottom:14px}
+.testi-stars span{color:#f59e0b;font-size:.9rem}
+.testi-quote{font-size:.9rem;color:var(--ink2);line-height:1.7;margin-bottom:20px;font-style:italic}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{
+  width:36px;height:36px;border-radius:50%;
+  background:var(--accent-lt);
+  display:grid;place-items:center;
+  font-size:.8rem;font-weight:700;color:var(--accent);
+  flex-shrink:0;
+}
+.testi-name{font-size:.85rem;font-weight:600;color:var(--ink)}
+.testi-role{font-size:.78rem;color:var(--ink3)}
+
+/* ─── PRICING ───────────────────────────────────── */
+#pricing{background:var(--bg)}
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.price-card{
+  background:var(--white);border:1px solid var(--rule);
+  border-radius:12px;padding:32px;
+  transition:box-shadow .2s,transform .2s;
+  position:relative;overflow:hidden;
+}
+.price-card:hover{box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.price-card.popular{border-color:var(--accent);border-width:2px}
+.price-popular-badge{
+  position:absolute;top:0;right:28px;
+  background:var(--accent);color:#fff;
+  font-size:.72rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 14px;border-radius:0 0 8px 8px;
+}
+.price-plan{font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin-bottom:10px}
+.price-title{font-family:var(--serif);font-size:1.4rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.price-desc{font-size:.85rem;color:var(--ink3);margin-bottom:24px}
+.price-amount{display:flex;align-items:baseline;gap:4px;margin-bottom:6px}
+.price-currency{font-size:1.1rem;font-weight:600;color:var(--ink);align-self:flex-start;margin-top:6px}
+.price-num{font-family:var(--serif);font-size:3rem;font-weight:700;color:var(--ink);line-height:1}
+.price-period{font-size:.85rem;color:var(--ink3)}
+.price-billed{font-size:.78rem;color:var(--ink3);margin-bottom:28px}
+.price-divider{border:none;border-top:1px solid var(--rule2);margin-bottom:24px}
+.price-features{display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.price-feat{display:flex;align-items:flex-start;gap:10px;font-size:.875rem;color:var(--ink2)}
+.price-feat-icon{
+  width:18px;height:18px;border-radius:50%;
+  background:var(--green-lt);color:var(--green);
+  display:grid;place-items:center;font-size:10px;
+  flex-shrink:0;margin-top:1px;
+}
+.price-feat-icon.off{background:var(--rule2);color:var(--ink3)}
+.price-feat.off{color:var(--ink3)}
+
+/* ─── CTA BAND ──────────────────────────────────── */
+#cta{
+  background:var(--accent);
+  padding:80px 32px;text-align:center;
+}
+.cta-inner{max-width:680px;margin:0 auto}
+.cta-h2{
+  font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.8rem);
+  font-weight:700;color:#fff;letter-spacing:-.025em;
+  line-height:1.15;margin-bottom:16px;
+}
+.cta-sub{color:rgba(255,255,255,.75);font-size:1rem;margin-bottom:36px}
+.btn-white{
+  background:#fff;color:var(--accent);
+  padding:14px 34px;font-size:1rem;font-weight:700;
+  border-radius:8px;box-shadow:0 4px 20px rgba(0,0,0,.15);
+  transition:all .2s;
+}
+.btn-white:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.2)}
+
+/* ─── CONTACT ───────────────────────────────────── */
+#contact{background:var(--white);padding:96px 32px}
+.contact-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
+.contact-info{}
+.contact-h2{font-family:var(--serif);font-size:2.2rem;font-weight:700;letter-spacing:-.025em;margin-bottom:16px}
+.contact-sub{font-size:.95rem;color:var(--ink2);line-height:1.7;margin-bottom:36px}
+.contact-points{display:flex;flex-direction:column;gap:16px}
+.contact-point{display:flex;align-items:flex-start;gap:12px}
+.contact-point-icon{
+  width:36px;height:36px;border-radius:8px;background:var(--accent-lt);
+  display:grid;place-items:center;font-size:16px;flex-shrink:0;
+}
+.contact-point-t{font-size:.875rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.contact-point-d{font-size:.825rem;color:var(--ink3)}
+
+/* form */
+.form{display:flex;flex-direction:column;gap:16px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.form-group{display:flex;flex-direction:column;gap:6px}
+.form-label{font-size:.8rem;font-weight:600;color:var(--ink2);letter-spacing:.01em}
+.form-input{
+  background:var(--bg);border:1.5px solid var(--rule);
+  border-radius:var(--r);padding:10px 14px;
+  font-family:var(--sans);font-size:.9rem;color:var(--ink);
+  outline:none;transition:border-color .2s,box-shadow .2s;width:100%;
+}
+.form-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(26,86,219,.1)}
+.form-input::placeholder{color:var(--ink3)}
+select.form-input{cursor:pointer}
+textarea.form-input{resize:vertical;min-height:110px}
+.form-submit{
+  background:var(--accent);color:#fff;
+  padding:13px 28px;font-size:.95rem;font-weight:600;
+  border-radius:var(--r);cursor:pointer;border:none;
+  box-shadow:0 2px 10px rgba(26,86,219,.25);
+  transition:all .2s;display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--sans);
+}
+.form-submit:hover{background:var(--accent-dk);transform:translateY(-1px);box-shadow:0 4px 16px rgba(26,86,219,.35)}
+.form-note{font-size:.78rem;color:var(--ink3)}
+.form-success{
+  display:none;
+  text-align:center;padding:36px 20px;
+  background:var(--green-lt);border-radius:12px;border:1px solid #a7f3d0;
+}
+.form-success-icon{font-size:2.5rem;margin-bottom:10px}
+.form-success-t{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.form-success-d{font-size:.9rem;color:var(--ink2)}
+
+/* ─── FOOTER ────────────────────────────────────── */
+#footer{background:var(--ink);padding:60px 32px 32px}
+.footer-inner{max-width:1120px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:48px;margin-bottom:48px}
+.footer-logo{font-family:var(--serif);font-size:1.3rem;font-weight:700;color:#fff;margin-bottom:12px}
+.footer-logo span{color:var(--accent)}
+.footer-about{font-size:.85rem;color:rgba(255,255,255,.45);line-height:1.7;max-width:280px}
+.footer-col-title{font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:16px}
+.footer-links{display:flex;flex-direction:column;gap:10px}
+.footer-links a{font-size:.85rem;color:rgba(255,255,255,.55);transition:color .2s}
+.footer-links a:hover{color:#fff}
+.footer-bottom{
+  border-top:1px solid rgba(255,255,255,.08);
+  padding-top:28px;display:flex;align-items:center;
+  justify-content:space-between;gap:16px;flex-wrap:wrap;
+}
+.footer-copy{font-size:.8rem;color:rgba(255,255,255,.3)}
+.footer-legal{display:flex;gap:20px}
+.footer-legal a{font-size:.8rem;color:rgba(255,255,255,.35);transition:color .2s}
+.footer-legal a:hover{color:rgba(255,255,255,.7)}
+
+/* ─── RESPONSIVE ────────────────────────────────── */
+@media(max-width:960px){
+  #hero{grid-template-columns:1fr;padding:64px 24px 48px}
+  .hero-visual{display:none}
+  .feat-grid{grid-template-columns:1fr}
+  .feat-item{border-right:none}
+  .feat-item:nth-last-child(-n+2){border-bottom:1px solid var(--rule)}
+  .feat-item:last-child{border-bottom:none}
+  .steps{grid-template-columns:1fr 1fr}
+  .steps::before{display:none}
+  .metrics-inner{grid-template-columns:1fr 1fr}
+  .testi-grid{grid-template-columns:1fr}
+  .price-grid{grid-template-columns:1fr}
+  .contact-inner{grid-template-columns:1fr;gap:48px}
+  .footer-top{grid-template-columns:1fr 1fr}
+  .nav-links,.nav-cta{display:none}
+  .nav-ham{display:flex}
+}
+@media(max-width:600px){
+  .section{padding:64px 20px}
+  .steps{grid-template-columns:1fr}
+  .metrics-inner{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+}
+
+/* ─── COUNTER ANIMATION ─────────────────────────── */
+.count-up{transition:all .3s}
+
+/* ─── NOTIFICATION TOAST ────────────────────────── */
+#toast{
+  position:fixed;bottom:28px;right:28px;z-index:9999;
+  background:var(--ink);color:#fff;
+  padding:14px 20px;border-radius:10px;
+  font-size:.875rem;font-weight:500;
+  box-shadow:0 8px 32px rgba(0,0,0,.3);
+  display:flex;align-items:center;gap:10px;
+  transform:translateY(80px);opacity:0;
+  transition:all .35s cubic-bezier(.22,1,.36,1);
+  max-width:320px;
+}
+#toast.show{transform:none;opacity:1}
+#toast .toast-icon{font-size:1.1rem}
+</style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">Flow<span>matic</span></a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How It Works</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#testimonials">Customers</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="nav-cta">
+      <a href="#contact" class="btn btn-ghost">Sign In</a>
+      <a href="#contact" class="btn btn-primary">Get Started Free →</a>
+    </div>
+    <button class="nav-ham" id="hamBtn" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <div class="nav-mob" id="navMob">
+    <a href="#features">Features</a>
+    <a href="#how">How It Works</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#contact">Contact</a>
+    <a href="#contact" class="btn btn-primary">Get Started Free →</a>
+  </div>
+</nav>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero-wrap" style="background:var(--white)">
+<div id="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow reveal"><span></span> Trusted by 3,000+ small businesses</div>
+    <h1 class="hero-h1 reveal reveal-delay-1">Automate the work.<br><em>Grow the business.</em></h1>
+    <p class="hero-sub reveal reveal-delay-2">Flowmatic handles your repetitive tasks — lead follow-ups, invoice reminders, customer emails — so you can focus on what actually grows your business.</p>
+    <div class="hero-actions reveal reveal-delay-3">
+      <a href="#contact" class="btn btn-primary btn-large">Start Free Trial</a>
+      <a href="#how" class="btn btn-outline btn-large">See How It Works</a>
+    </div>
+    <div class="hero-trust reveal reveal-delay-4">
+      <div class="hero-trust-avatars">
+        <span>RK</span><span>PS</span><span>AM</span><span>NJ</span><span>+</span>
+      </div>
+      <span>Joined by 3,000+ business owners this year</span>
+    </div>
+  </div>
+
+  <!-- Illustration -->
+  <div class="hero-visual reveal reveal-delay-2">
+    <div class="hero-window-bar">
+      <div class="hw-dot"></div><div class="hw-dot"></div><div class="hw-dot"></div>
+      <span class="hw-title">flowmatic — automation dashboard</span>
+    </div>
+    <div class="hero-dash">
+      <div class="hd-row">
+        <div class="hd-card">
+          <div class="hd-card-label">Leads Captured</div>
+          <div class="hd-card-val" id="hc1">0</div>
+          <div class="hd-card-chg up">↑ 24% this week</div>
+        </div>
+        <div class="hd-card">
+          <div class="hd-card-label">Emails Sent</div>
+          <div class="hd-card-val" id="hc2">0</div>
+          <div class="hd-card-chg up">↑ Automated</div>
+        </div>
+        <div class="hd-card">
+          <div class="hd-card-label">Hours Saved</div>
+          <div class="hd-card-val" id="hc3">0</div>
+          <div class="hd-card-chg up">↑ /month avg</div>
+        </div>
+      </div>
+
+      <div class="hd-flow">
+        <div class="hd-flow-title">Active Workflow — Lead Nurture</div>
+        <div class="hd-flow-nodes">
+          <div class="hd-node"><span class="hd-node-icon">📋</span>Form Submit</div>
+          <div class="hd-arrow"></div>
+          <div class="hd-node"><span class="hd-node-icon">✉️</span>Welcome Email</div>
+          <div class="hd-arrow"></div>
+          <div class="hd-node"><span class="hd-node-icon">⏰</span>Follow-up +3d</div>
+          <div class="hd-arrow"></div>
+          <div class="hd-node" style="background:var(--accent-lt);border-color:var(--accent)"><span class="hd-node-icon">🎯</span>CRM</div>
+        </div>
+        <div class="hd-status">
+          <div class="hd-status-item"><div class="hd-dot" style="background:var(--green)"></div>Running · 47 contacts</div>
+          <div class="hd-status-item"><div class="hd-dot" style="background:var(--accent)"></div>Last run: 2m ago</div>
+        </div>
+      </div>
+
+      <div class="hd-ticker">
+        <span>⚡</span>
+        <div style="overflow:hidden;flex:1">
+          <div class="hd-ticker-items">
+            <span class="hd-ticker-item">New lead from contact form — Ramesh Bakery</span>
+            <span class="hd-ticker-item">Invoice reminder sent — Studio Craft Co.</span>
+            <span class="hd-ticker-item">Follow-up email triggered — Priya's Salon</span>
+            <span class="hd-ticker-item">New lead from contact form — Ramesh Bakery</span>
+            <span class="hd-ticker-item">Invoice reminder sent — Studio Craft Co.</span>
+            <span class="hd-ticker-item">Follow-up email triggered — Priya's Salon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+
+<!-- ══════════════ SOCIAL PROOF ══════════════ -->
+<div id="social">
+  <div class="social-inner">
+    <span class="social-label">Trusted by businesses using</span>
+    <div class="social-logos">
+      <span class="social-logo">Shopify</span>
+      <span class="social-logo">Razorpay</span>
+      <span class="social-logo">WhatsApp</span>
+      <span class="social-logo">Gmail</span>
+      <span class="social-logo">Tally</span>
+      <span class="social-logo">IndiaMART</span>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════ FEATURES ══════════════ -->
+<section class="section" id="features">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">What Flowmatic Does</div>
+      <h2 class="section-h2 reveal reveal-delay-1">Everything you need to automate<br>your small business</h2>
+      <p class="section-sub reveal reveal-delay-2">Built for shop owners, freelancers, and service businesses — no coding, no IT team needed.</p>
+    </div>
+
+    <div class="feat-grid" style="border:1px solid var(--rule);border-radius:12px;overflow:hidden;">
+      <div class="feat-item reveal">
+        <div class="feat-icon">📬</div>
+        <h3 class="feat-h3">Lead Follow-Up Automation</h3>
+        <p class="feat-p">Automatically send personalised follow-up emails and WhatsApp messages when a new enquiry comes in — within seconds, not hours.</p>
+      </div>
+      <div class="feat-item reveal reveal-delay-1">
+        <div class="feat-icon">🧾</div>
+        <h3 class="feat-h3">Invoice & Payment Reminders</h3>
+        <p class="feat-p">Stop chasing payments manually. Set up automatic reminders at 3, 7, and 14 days overdue and get paid 2× faster.</p>
+      </div>
+      <div class="feat-item reveal reveal-delay-2">
+        <div class="feat-icon">📊</div>
+        <h3 class="feat-h3">CRM & Contact Management</h3>
+        <p class="feat-p">Every lead, customer, and conversation in one place. Flowmatic automatically updates records and tracks every touchpoint.</p>
+      </div>
+      <div class="feat-item reveal reveal-delay-3">
+        <div class="feat-icon">🔗</div>
+        <h3 class="feat-h3">App Integrations</h3>
+        <p class="feat-p">Connects with tools you already use — Gmail, WhatsApp, Razorpay, Shopify, IndiaMART, and 40+ more. Set up in minutes.</p>
+      </div>
+      <div class="feat-item reveal">
+        <div class="feat-icon">📅</div>
+        <h3 class="feat-h3">Appointment Scheduling</h3>
+        <p class="feat-p">Let customers book slots automatically. Confirmations, reminders, and reschedules handled without a single manual message.</p>
+      </div>
+      <div class="feat-item reveal reveal-delay-1">
+        <div class="feat-icon">📈</div>
+        <h3 class="feat-h3">Reports & Insights</h3>
+        <p class="feat-p">Clear weekly reports on leads, conversions, and revenue. Know exactly what's working without spending hours in spreadsheets.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ HOW IT WORKS ══════════════ -->
+<section class="section" id="how" style="background:var(--white)">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">How It Works</div>
+      <h2 class="section-h2 reveal reveal-delay-1">Up and running in under 15 minutes</h2>
+      <p class="section-sub reveal reveal-delay-2">No complex setup. No developers required. Just connect, configure, and start saving hours every week.</p>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3 class="step-h">Connect Your Tools</h3>
+        <p class="step-p">Link your email, WhatsApp, and business apps in a few clicks. We support 40+ integrations out of the box.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3 class="step-h">Choose a Workflow</h3>
+        <p class="step-p">Pick from 50+ ready-made automation templates built for small businesses — or build your own in minutes.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3 class="step-h">Customise & Launch</h3>
+        <p class="step-p">Edit messages, set timing, and define conditions. Everything is visual — no coding or technical knowledge needed.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3 class="step-h">Watch It Work</h3>
+        <p class="step-p">Your automations run 24/7 in the background. Track performance and fine-tune from your simple dashboard.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ METRICS ══════════════ -->
+<section id="metrics">
+  <div class="metrics-inner">
+    <div class="metric-item reveal">
+      <div class="metric-val"><span class="c-num" data-target="3000">0</span><span>+</span></div>
+      <div class="metric-label">Businesses Automated</div>
+    </div>
+    <div class="metric-item reveal reveal-delay-1">
+      <div class="metric-val"><span class="c-num" data-target="18">0</span><span>hrs</span></div>
+      <div class="metric-label">Saved Per Business / Month</div>
+    </div>
+    <div class="metric-item reveal reveal-delay-2">
+      <div class="metric-val"><span class="c-num" data-target="40">0</span><span>%</span></div>
+      <div class="metric-label">Average Revenue Increase</div>
+    </div>
+    <div class="metric-item reveal reveal-delay-3">
+      <div class="metric-val"><span class="c-num" data-target="99">0</span><span>%</span></div>
+      <div class="metric-label">Customer Satisfaction Rate</div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TESTIMONIALS ══════════════ -->
+<section class="section" id="testimonials">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">Customer Stories</div>
+      <h2 class="section-h2 reveal reveal-delay-1">Small businesses, real results</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-quote">"Before Flowmatic, I was spending 3 hours every morning sending follow-up messages manually. Now it's all automatic and I've doubled my conversion rate."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">RK</div>
+          <div>
+            <div class="testi-name">Ramesh Kapoor</div>
+            <div class="testi-role">Owner, Kapoor Interior Design · Delhi</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-quote">"I used to forget to send payment reminders and it was killing my cash flow. Now reminders go out automatically and I get paid on time almost always."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">PS</div>
+          <div>
+            <div class="testi-name">Priya Sharma</div>
+            <div class="testi-role">Founder, Priya's Events Co. · Mumbai</div>
+          </div>
+        </div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-stars"><span>★</span><span>★</span><span>★</span><span>★</span><span>★</span></div>
+        <p class="testi-quote">"Setup took 20 minutes. Within the first week our enquiry response time dropped from 6 hours to under 2 minutes. Our customers noticed immediately."</p>
+        <div class="testi-author">
+          <div class="testi-avatar">AM</div>
+          <div>
+            <div class="testi-name">Arjun Mehta</div>
+            <div class="testi-role">Director, SwiftTech Solutions · Bangalore</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ PRICING ══════════════ -->
+<section class="section" id="pricing" style="background:var(--bg)">
+  <div class="section-inner">
+    <div class="section-header center">
+      <div class="section-tag reveal">Pricing</div>
+      <h2 class="section-h2 reveal reveal-delay-1">Simple, honest pricing</h2>
+      <p class="section-sub reveal reveal-delay-2">No hidden fees. No per-contact charges. Cancel anytime. All plans include a 14-day free trial.</p>
+    </div>
+
+    <div class="price-grid">
+      <!-- Starter -->
+      <div class="price-card reveal">
+        <div class="price-plan">Starter</div>
+        <div class="price-title">Essential Automation</div>
+        <div class="price-desc">Perfect for solo entrepreneurs and freelancers just getting started.</div>
+        <div class="price-amount">
+          <span class="price-currency">₹</span>
+          <span class="price-num">999</span>
+        </div>
+        <div class="price-billed">per month, billed monthly</div>
+        <hr class="price-divider"/>
+        <div class="price-features">
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Up to 3 active workflows</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>500 contacts</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Email automation</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>5 integrations</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Basic reports</div>
+          <div class="price-feat off"><div class="price-feat-icon off">—</div>WhatsApp automation</div>
+          <div class="price-feat off"><div class="price-feat-icon off">—</div>Priority support</div>
+        </div>
+        <a href="#contact" class="btn btn-outline fw" style="width:100%;justify-content:center;padding:12px">Start Free Trial</a>
+      </div>
+
+      <!-- Growth (Popular) -->
+      <div class="price-card popular reveal reveal-delay-1">
+        <div class="price-popular-badge">Most Popular</div>
+        <div class="price-plan">Growth</div>
+        <div class="price-title">Full Automation</div>
+        <div class="price-desc">For growing businesses ready to automate their entire customer journey.</div>
+        <div class="price-amount">
+          <span class="price-currency">₹</span>
+          <span class="price-num">2,499</span>
+        </div>
+        <div class="price-billed">per month, billed monthly · Save 20% yearly</div>
+        <hr class="price-divider"/>
+        <div class="price-features">
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Unlimited workflows</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>5,000 contacts</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Email + WhatsApp automation</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>40+ integrations</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Advanced reports & analytics</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>CRM included</div>
+          <div class="price-feat off"><div class="price-feat-icon off">—</div>Dedicated account manager</div>
+        </div>
+        <a href="#contact" class="btn btn-primary fw" style="width:100%;justify-content:center;padding:12px">Start Free Trial</a>
+      </div>
+
+      <!-- Business -->
+      <div class="price-card reveal reveal-delay-2">
+        <div class="price-plan">Business</div>
+        <div class="price-title">Scale Without Limits</div>
+        <div class="price-desc">For established businesses with a team and high-volume automation needs.</div>
+        <div class="price-amount">
+          <span class="price-currency">₹</span>
+          <span class="price-num">5,999</span>
+        </div>
+        <div class="price-billed">per month, billed monthly · Save 25% yearly</div>
+        <hr class="price-divider"/>
+        <div class="price-features">
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Everything in Growth</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Unlimited contacts</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Team access (5 users)</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Custom workflow builder</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>API access</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>White-label option</div>
+          <div class="price-feat"><div class="price-feat-icon">✓</div>Dedicated account manager</div>
+        </div>
+        <a href="#contact" class="btn btn-outline fw" style="width:100%;justify-content:center;padding:12px">Start Free Trial</a>
+      </div>
+    </div>
+
+    <p style="text-align:center;font-size:.85rem;color:var(--ink3);margin-top:28px;" class="reveal">
+      All prices in INR · GST applicable · Need a custom plan? <a href="#contact" style="color:var(--accent);font-weight:600;">Talk to us →</a>
+    </p>
+  </div>
+</section>
+
+<!-- ══════════════ CTA BAND ══════════════ -->
+<section id="cta">
+  <div class="cta-inner reveal">
+    <h2 class="cta-h2">Ready to get your time back?</h2>
+    <p class="cta-sub">Join 3,000+ small businesses that run smarter with Flowmatic. Start your free 14-day trial — no credit card required.</p>
+    <a href="#contact" class="btn btn-white">Get Started Free — It's Free for 14 Days</a>
+  </div>
+</section>
+
+<!-- ══════════════ CONTACT ══════════════ -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-info reveal">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="contact-h2">Book a free demo or start your trial</h2>
+      <p class="contact-sub">Our team will show you exactly how Flowmatic can work for your specific business in a 20-minute live demo. No pressure, no jargon.</p>
+      <div class="contact-points">
+        <div class="contact-point">
+          <div class="contact-point-icon">📞</div>
+          <div>
+            <div class="contact-point-t">Call Us</div>
+            <div class="contact-point-d">+91 98765 43210 · Mon–Sat, 9am–7pm</div>
+          </div>
+        </div>
+        <div class="contact-point">
+          <div class="contact-point-icon">✉️</div>
+          <div>
+            <div class="contact-point-t">Email</div>
+            <div class="contact-point-d">hello@flowmatic.in</div>
+          </div>
+        </div>
+        <div class="contact-point">
+          <div class="contact-point-icon">💬</div>
+          <div>
+            <div class="contact-point-t">WhatsApp Support</div>
+            <div class="contact-point-d">Chat with us on WhatsApp — usually reply within 5 minutes</div>
+          </div>
+        </div>
+        <div class="contact-point">
+          <div class="contact-point-icon">⚡</div>
+          <div>
+            <div class="contact-point-t">14-Day Free Trial</div>
+            <div class="contact-point-d">Full access, no credit card needed. Cancel anytime.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="reveal reveal-delay-1">
+      <div id="contactForm">
+        <div style="margin-bottom:24px;">
+          <h3 style="font-family:var(--serif);font-size:1.4rem;font-weight:700;margin-bottom:6px;">Book Your Free Demo</h3>
+          <p style="font-size:.875rem;color:var(--ink3);">Fill in the details and we'll reach out within 2 hours.</p>
+        </div>
+        <div class="form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First Name *</label>
+              <input class="form-input" id="f-fname" type="text" placeholder="Ramesh" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last Name</label>
+              <input class="form-input" id="f-lname" type="text" placeholder="Kapoor" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Email *</label>
+            <input class="form-input" id="f-email" type="email" placeholder="ramesh@yourbusiness.com" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input class="form-input" id="f-phone" type="tel" placeholder="+91 98765 43210" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Business Type</label>
+              <select class="form-input" id="f-type">
+                <option value="">Select your business…</option>
+                <option>Retail / Shop</option>
+                <option>Service Business</option>
+                <option>Freelancer / Consultant</option>
+                <option>Restaurant / Food</option>
+                <option>Healthcare / Clinic</option>
+                <option>Real Estate</option>
+                <option>Education / Coaching</option>
+                <option>E-commerce</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">What do you want to automate? *</label>
+            <textarea class="form-input" id="f-msg" placeholder="e.g. Lead follow-ups, invoice reminders, appointment booking…"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Plan</label>
+            <select class="form-input" id="f-plan">
+              <option value="">Not sure yet</option>
+              <option>Starter — ₹999/mo</option>
+              <option>Growth — ₹2,499/mo (Most Popular)</option>
+              <option>Business — ₹5,999/mo</option>
+            </select>
+          </div>
+          <button class="form-submit" id="submitBtn" onclick="submitForm(event)">
+            <span id="submitTxt">Book My Free Demo →</span>
+          </button>
+          <p class="form-note">🔒 Your information is safe with us. We'll never spam or share your data.</p>
+        </div>
+      </div>
+      <!-- Success state -->
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">🎉</div>
+        <div class="form-success-t">You're all set!</div>
+        <div class="form-success-d">We've received your request and will reach out within 2 hours.<br>Check your email for a confirmation.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">Flow<span>matic</span></div>
+        <p class="footer-about">Business automation built for small businesses in India. Simple to set up, powerful enough to transform how you work.</p>
+      </div>
+      <div>
+        <div class="footer-col-title">Product</div>
+        <div class="footer-links">
+          <a href="#features">Features</a>
+          <a href="#how">How It Works</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#">Integrations</a>
+          <a href="#">Templates</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Company</div>
+        <div class="footer-links">
+          <a href="#">About Us</a>
+          <a href="#">Blog</a>
+          <a href="#">Customers</a>
+          <a href="#">Careers</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+      <div>
+        <div class="footer-col-title">Support</div>
+        <div class="footer-links">
+          <a href="#">Help Centre</a>
+          <a href="#">Documentation</a>
+          <a href="#">API Docs</a>
+          <a href="#">System Status</a>
+          <a href="#">Community</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Flowmatic Technologies Pvt. Ltd. · Made with ♥ in India</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+        <a href="#">Refund Policy</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast"><span class="toast-icon">✅</span><span id="toastMsg">Demo request sent!</span></div>
+
+<script>
+// ── NAV scroll effect ──
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>10)},{ passive:true});
+
+// ── Mobile nav ──
+document.getElementById('hamBtn').addEventListener('click',function(){
+  const mob=document.getElementById('navMob');
+  const open=mob.style.display==='flex';
+  mob.style.display=open?'none':'flex';
+  this.querySelectorAll('span')[0].style.transform=open?'':'rotate(45deg) translate(5px,5px)';
+  this.querySelectorAll('span')[1].style.opacity=open?'1':'0';
+  this.querySelectorAll('span')[2].style.transform=open?'':'rotate(-45deg) translate(5px,-5px)';
+});
+document.querySelectorAll('#navMob a').forEach(a=>a.addEventListener('click',()=>{
+  document.getElementById('navMob').style.display='none';
+}));
+
+// ── Scroll reveal ──
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');observer.unobserve(e.target);}});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+// ── Counter animation ──
+function animateCount(el,target,duration=1800){
+  const start=Date.now();
+  const step=()=>{
+    const p=Math.min((Date.now()-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.round(ease*target).toLocaleString();
+    if(p<1)requestAnimationFrame(step);
+  };
+  step();
+}
+const metricObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.c-num').forEach(el=>{
+        animateCount(el,parseInt(el.dataset.target));
+      });
+      metricObserver.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('#metrics').forEach(el=>metricObserver.observe(el));
+
+// ── Hero mini-counter ──
+const heroCountObserver=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      animateCount(document.getElementById('hc1'),1284,1400);
+      animateCount(document.getElementById('hc2'),8472,1600);
+      animateCount(document.getElementById('hc3'),18,1200);
+      heroCountObserver.unobserve(e.target);
+    }
+  });
+},{threshold:.2});
+heroCountObserver.observe(document.getElementById('hero'));
+
+// ── Toast helper ──
+function showToast(msg){
+  const t=document.getElementById('toast');
+  document.getElementById('toastMsg').textContent=msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3800);
+}
+
+// ── Google Sheets Web App URL ──
+// STEP: Paste your Google Apps Script Web App URL below after deployment
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbzvZs7nQhGAvw05wvQsRxwM8ZY8oLNkOf4Jh22cmlXG9DnQBEJev9ORf_gnqtcvBsEu/exec';
+
+// ── Form submit → Google Sheets ──
+async function submitForm(e){
+  e.preventDefault();
+
+  // Collect values
+  const fname = document.getElementById('f-fname').value.trim();
+  const lname = document.getElementById('f-lname').value.trim();
+  const email = document.getElementById('f-email').value.trim();
+  const phone = document.getElementById('f-phone').value.trim();
+  const type  = document.getElementById('f-type').value.trim();
+  const msg   = document.getElementById('f-msg').value.trim();
+  const plan  = document.getElementById('f-plan').value.trim();
+
+  // Validation
+  if(!fname){ showToast('⚠️ Please enter your first name.'); return; }
+  if(!email || !email.includes('@')){ showToast('⚠️ Please enter a valid email.'); return; }
+  if(!msg){ showToast('⚠️ Please tell us what you want to automate.'); return; }
+
+  // Check if URL is configured
+  if(SHEET_URL === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE'){
+    showToast('⚠️ Google Sheets URL not configured yet. See setup guide.');
+    // Still show success UI in demo/preview mode
+    document.getElementById('contactForm').style.display='none';
+    document.getElementById('formSuccess').style.display='block';
+    return;
+  }
+
+  // UI: loading state
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  document.getElementById('submitTxt').textContent = 'Sending…';
+
+  // Build payload
+  const payload = {
+    timestamp:   new Date().toLocaleString('en-IN', {timeZone:'Asia/Kolkata'}),
+    firstName:   fname,
+    lastName:    lname,
+    email:       email,
+    phone:       phone,
+    businessType: type,
+    message:     msg,
+    plan:        plan,
+    source:      document.referrer || 'Direct',
+    page:        window.location.href,
+  };
+
+  try {
+    // Google Apps Script requires no-cors for cross-origin POST
+    await fetch(SHEET_URL, {
+      method: 'POST',
+      mode:   'no-cors',
+      headers:{ 'Content-Type': 'application/json' },
+      body:   JSON.stringify(payload),
+    });
+
+    // Show success (no-cors returns opaque response, so we assume success)
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('formSuccess').style.display = 'block';
+    showToast('🎉 Demo request sent! We\'ll reach out within 2 hours.');
+
+  } catch(err) {
+    btn.disabled = false;
+    document.getElementById('submitTxt').textContent = 'Book My Free Demo →';
+    showToast('❌ Submission failed. Please try again or call us directly.');
+    console.error('Sheet submit error:', err);
+  }
+}
+
+// ── Smooth scroll for all anchor links ──
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const id=a.getAttribute('href');
+    if(id==='#') return;
+    const target=document.querySelector(id);
+    if(target){
+      e.preventDefault();
+      target.scrollIntoView({behavior:'smooth',block:'start'});
+    }
+  });
+});
+</script>
+</body>
+</html>
